@@ -36,7 +36,7 @@
   - Enviar URL válida → retorna 201 y la estructura JSON correcta.
   - Enviar URL inválida → retorna 400.
 - [x] **T2.2** — Implementar `services/url.service.ts` (método `createUrl`) y `controllers/url.controller.ts`. El servicio debe contemplar hasta 3 reintentos en caso de colisión (código `P2002` de Prisma) según EC-03.
-- [ ] **T2.3** — Escribir test de integración para redirección `GET /{shortCode}`:
+- [x] **T2.3** — Escribir test de integración para redirección `GET /{shortCode}`:
   - ShortCode válido → retorna 302 y header Location correcto (RN-02). A su vez, validar vía BD que el campo `clicks` se incrementó en 1 y `lastClickedAt` se actualizó.
   - Ejecutar 10 requests concurrentes (Promise.all) al mismo endpoint y validar que al final en base de datos los clics sumen exactamente +10 (validar operación atómica EC-05).
   - ShortCode inexistente → retorna 404 (EC-04).
