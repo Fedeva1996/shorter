@@ -20,7 +20,7 @@
 
 ## Fase 1: Backend — Pure Core
 
-- [ ] **T1.1** — Escribir tests unitarios en Vitest para `core/urlValidator.ts` verificando:
+- [x] **T1.1** — Escribir tests unitarios en Vitest para `core/urlValidator.ts` verificando:
   - URLs válidas pasan.
   - Strings sin formato HTTP/HTTPS o URLs inválidas fallan (EC-01).
   - URLs de más de 2048 caracteres fallan (EC-02).
