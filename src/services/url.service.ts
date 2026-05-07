@@ -25,4 +25,23 @@ export class UrlService {
     }
     throw new Error('No se pudo generar un shortCode único después de 3 intentos');
   }
+
+  static async resolveAndIncrement(shortCode: string) {
+    try {
+      const urlEntry = await prisma.urlEntry.update({
+        where: { shortCode },
+        data: {
+          clicks: { increment: 1 },
+          lastClickedAt: new Date(),
+        },
+      });
+      return urlEntry;
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        // P2025: Record to update not found
+        return null;
+      }
+      throw error;
+    }
+  }
 }

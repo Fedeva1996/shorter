@@ -40,7 +40,7 @@
   - ShortCode válido → retorna 302 y header Location correcto (RN-02). A su vez, validar vía BD que el campo `clicks` se incrementó en 1 y `lastClickedAt` se actualizó.
   - Ejecutar 10 requests concurrentes (Promise.all) al mismo endpoint y validar que al final en base de datos los clics sumen exactamente +10 (validar operación atómica EC-05).
   - ShortCode inexistente → retorna 404 (EC-04).
-- [ ] **T2.4** — Implementar el endpoint de redirección, asegurando usar la API atómica de Prisma (`increment: 1`).
+- [x] **T2.4** — Implementar el endpoint de redirección, asegurando usar la API atómica de Prisma (`increment: 1`).
 - [ ] **T2.5** — Escribir test de integración para `GET /api/v1/urls/{shortCode}/stats`. Verificar respuestas 200 (con estadísticas correctas) y 404.
 - [ ] **T2.6** — Implementar endpoint de stats en el controlador y servicio.
 - [ ] **T2.7** — Configurar un Middleware de Express para capturar excepciones globales (ej. Errores de Zod 400 y Errores 500) devolviendo JSON limpio, y armar el pipeline completo de rutas en `app.ts`.

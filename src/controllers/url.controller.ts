@@ -17,4 +17,19 @@ export class UrlController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  static async redirect(req: Request, res: Response) {
+    try {
+      const { shortCode } = req.params;
+      const urlEntry = await UrlService.resolveAndIncrement(shortCode);
+      
+      if (!urlEntry) {
+        return res.status(404).json({ error: 'Enlace no encontrado' });
+      }
+      
+      return res.redirect(302, urlEntry.originalUrl);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
 }
