@@ -12,7 +12,7 @@
 
 - [x] **T0.1** — Crear el archivo `docker-compose.yml` en la raíz del backend con el servicio `db` (PostgreSQL 15), variables de entorno (`POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`), volumen y health check.
 - [x] **T0.2** — Inicializar proyecto backend Node.js (`npm init -y`, configurar `tsconfig.json`).
-- [ ] **T0.3** — Instalar dependencias del backend: `express`, `cors`, `zod`, `@prisma/client`, y devDependencies: `typescript`, `tsx`, `vitest`, `supertest`, `prisma`.
+- [x] **T0.3** — Instalar dependencias del backend: `express`, `cors`, `zod`, `@prisma/client`, y devDependencies: `typescript`, `tsx`, `vitest`, `supertest`, `prisma`.
 - [ ] **T0.4** — Configurar `prisma/schema.prisma` con el modelo `UrlEntry` (`id`, `originalUrl`, `shortCode` único, `clicks`, `createdAt`, `lastClickedAt`). Ejecutar primera migración.
 - [ ] **T0.5** — Inicializar proyecto frontend con Vite (`npm create vite@latest frontend -- --template react-ts`) y agregar TailwindCSS.
 
