@@ -26,7 +26,7 @@
   - URLs de más de 2048 caracteres fallan (EC-02).
 - [x] **T1.2** — Implementar `core/urlValidator.ts` usando Zod para satisfacer los tests.
 - [x] **T1.3** — Escribir tests unitarios para `core/codeGenerator.ts`: debe retornar un string alfanumérico (a-zA-Z0-9) de exactamente 6 caracteres (RN-01).
-- [ ] **T1.4** — Implementar `core/codeGenerator.ts`.
+- [x] **T1.4** — Implementar `core/codeGenerator.ts`.
 
 ---
 
