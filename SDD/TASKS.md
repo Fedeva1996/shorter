@@ -72,6 +72,6 @@
 ## Fase 4: Revisión y Cierre (VSDD)
 
 - [x] **T4.1** — Ejecutar toda la suite de tests (Backend y Frontend) y confirmar 100% verde.
-- [ ] **T4.2** — Abrir sesión del Adversario pasándole los archivos críticos (`url.service.ts`, `url.controller.ts`, esquemas de Prisma y validaciones) para buscar brechas (focus en incrementos atómicos y bloqueos por unicidad).
-- [ ] **T4.3** — Corregir hallazgos del Adversario si existieran, iterando hasta el `"VERIFICADO ✓"`.
-- [ ] **T4.4** — Marcar Criterios de Éxito completados en el `SPEC.md`.
+- [x] **T4.2** — Abrir sesión del Adversario pasándole los archivos críticos (`url.service.ts`, `url.controller.ts`, esquemas de Prisma y validaciones) para buscar brechas (focus en incrementos atómicos y bloqueos por unicidad).
+- [x] **T4.3** — Corregir hallazgos del Adversario si existieran, iterando hasta el `"VERIFICADO ✓"`.
+- [x] **T4.4** — Marcar Criterios de Éxito completados en el `SPEC.md`.

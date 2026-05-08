@@ -5,11 +5,31 @@ import { urlSchema } from '../core/urlValidator.js';
 export class UrlController {
   static async createUrl(req: Request, res: Response) {
     const { originalUrl } = req.body;
-    const validatedUrl = urlSchema.parse(originalUrl);
+    let validatedUrl: string;
+    try {
+      validatedUrl = urlSchema.parse(originalUrl);
+    } catch (e: any) {
+      throw e; // Zod handled validation
+    }
+
+    const parsedUrl = new URL(validatedUrl);
+    const appDomains = process.env.APP_DOMAIN 
+      ? process.env.APP_DOMAIN.split(',').map(d => d.trim()) 
+      : ['localhost:3000', 'localhost:5173'];
+    
+    if (appDomains.includes(parsedUrl.host)) {
+      return res.status(400).json({ error: "No se permite acortar URLs del propio dominio (Bucle detectado)" });
+    }
 
     const { entry, created } = await UrlService.createUrl(validatedUrl);
     const statusCode = created ? 201 : 200;
-    return res.status(statusCode).json(entry);
+    
+    return res.status(statusCode).json({
+      id: entry.id,
+      shortCode: entry.shortCode,
+      originalUrl: entry.originalUrl,
+      createdAt: entry.createdAt
+    });
   }
 
   static async redirect(req: Request, res: Response) {

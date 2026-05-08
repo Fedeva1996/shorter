@@ -70,7 +70,7 @@ interface UrlEntry {
 
 ## 6. Criterios de Éxito (Definition of Done)
 
-* [ ] Todos los tests unitarios del Pure Core pasan.
-* [ ] Tests de integración comprueban la correcta inserción, redirección (302) e incremento atómico de clics.
-* [ ] La interfaz web permite pegar la URL, obtener el enlace corto y tiene un botón para copiar al portapapeles.
-* [ ] El Adversario emite la sentencia `"VERIFICADO: El código cumple con el contrato y es robusto."`.
+* [x] Todos los tests unitarios del Pure Core pasan.
+* [x] Tests de integración comprueban la correcta inserción, redirección (302) e incremento atómico de clics.
+* [x] La interfaz web permite pegar la URL, obtener el enlace corto y tiene un botón para copiar al portapapeles.
+* [x] El Adversario emite la sentencia `"VERIFICADO: El código cumple con el contrato y es robusto."`.

@@ -41,6 +41,18 @@ describe('POST /api/v1/urls (Integración)', () => {
     expect(response.body).toHaveProperty('error');
   });
 
+  it('debe retornar 400 si la originalUrl no incluye http/https (EC-01)', async () => {
+    const response = await request(app).post('/api/v1/urls').send({ originalUrl: 'example.com/test' });
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+  });
+
+  it('debe retornar 400 si la URL apunta al propio dominio de la aplicación (RN-03)', async () => {
+    const response = await request(app).post('/api/v1/urls').send({ originalUrl: 'http://localhost:3000/aB3x9Z' });
+    expect(response.status).toBe(400);
+    expect(response.body.error).toMatch(/Bucle detectado/i);
+  });
+
   // T2.5.3 — Idempotencia (EC-07)
   it('[EC-07] debe retornar 200 con la entrada EXISTENTE al enviar una URL que ya fue acortada', async () => {
     const payload = { originalUrl: 'https://idempotent-test.example.com/same-url' };

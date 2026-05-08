@@ -22,8 +22,16 @@ export class UrlService {
         });
         return { entry: urlEntry, created: true };
       } catch (error: any) {
-        // P2002: Unique constraint failed (colisión de shortCode)
+        // P2002: Unique constraint failed
         if (error.code === 'P2002') {
+          // Chequeamos si el que falló fue originalUrl (Race condition)
+          if (error.meta?.target && Array.isArray(error.meta.target) && error.meta.target.includes('originalUrl')) {
+            const existingInRace = await prisma.urlEntry.findUnique({ where: { originalUrl } });
+            if (existingInRace) {
+              return { entry: existingInRace, created: false };
+            }
+          }
+          // Fue el shortCode
           retries++;
           continue;
         }
