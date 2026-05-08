@@ -65,7 +65,7 @@
 - [x] **T3.3** — Implementar `ShortenerForm.tsx`.
 - [x] **T3.4** — Implementar `ResultDisplay.tsx`, el cual recibe el shortCode generado y muestra el enlace completo (ej. `http://localhost:3000/aB3x9Z`) junto con un botón funcional de "Copiar al portapapeles".
 - [x] **T3.5** — Implementar `api/urlApi.ts` con fetch a `POST /api/v1/urls` del backend.
-- [ ] **T3.6** — Orquestar los componentes en `App.tsx`, gestionando estados de "loading", "error" (mostrando un mensaje claro si la URL es inválida) y "success".
+- [x] **T3.6** — Orquestar los componentes en `App.tsx`, gestionando estados de "loading", "error" (mostrando un mensaje claro si la URL es inválida) y "success".
 
 ---
 
