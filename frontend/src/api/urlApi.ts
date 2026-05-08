@@ -1,7 +1,7 @@
-import { CreateUrlResponse } from '../types/url.types';
+import type { CreateUrlResponse } from '../types/url.types';
 
-const API_BASE_URL = '/api/v1/urls';
-
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_BASE_URL = `${BACKEND_URL}/api/v1/urls`;
 export const createShortUrl = async (originalUrl: string): Promise<CreateUrlResponse> => {
   const response = await fetch(API_BASE_URL, {
     method: 'POST',

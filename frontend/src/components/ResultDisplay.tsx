@@ -6,7 +6,8 @@ interface ResultDisplayProps {
 
 export const ResultDisplay = ({ shortCode }: ResultDisplayProps) => {
   const [copied, setCopied] = useState(false);
-  const fullUrl = `${window.location.origin}/${shortCode}`;
+  const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const fullUrl = `${BACKEND_URL}/${shortCode}`;
 
   useEffect(() => {
     if (copied) {

@@ -26,7 +26,7 @@ describe('urlApi', () => {
 
     const result = await createShortUrl('https://example.com/test');
 
-    expect(global.fetch).toHaveBeenCalledWith('/api/v1/urls', {
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:3000/api/v1/urls', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

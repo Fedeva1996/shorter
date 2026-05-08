@@ -13,18 +13,25 @@ export class UrlController {
   }
 
   static async redirect(req: Request, res: Response) {
-    const { shortCode } = req.params;
+    const shortCode = Array.isArray(req.params.shortCode)
+      ? req.params.shortCode[0]
+      : req.params.shortCode;
+
     const urlEntry = await UrlService.resolveAndIncrement(shortCode);
-    
+
     if (!urlEntry) {
       return res.status(404).json({ error: 'Enlace no encontrado' });
     }
-    
+
     return res.redirect(302, urlEntry.originalUrl);
   }
 
   static async getStats(req: Request, res: Response) {
-    const { shortCode } = req.params;
+    // Prisma returns string[] for params, so we need to handle it
+    const shortCode = Array.isArray(req.params.shortCode)
+      ? req.params.shortCode[0]
+      : req.params.shortCode;
+
     const stats = await UrlService.getStats(shortCode);
 
     if (!stats) {
