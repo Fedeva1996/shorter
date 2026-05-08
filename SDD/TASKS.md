@@ -50,7 +50,7 @@
 ## Fase 2.5: Backend — Seguridad y Hardening
 
 - [x] **T2.5.1** — Escribir/Actualizar tests unitarios en Vitest para `core/urlValidator.ts` comprobando rechazo de bucles (RN-03).
-- [ ] **T2.5.2** — Implementar la validación anti-bucle en `core/urlValidator.ts` (Zod `refine`).
+- [x] **T2.5.2** — Implementar la validación anti-bucle en `core/urlValidator.ts` (Zod `refine`).
 - [ ] **T2.5.3** — Actualizar test de integración de POST `/api/v1/urls` comprobando la idempotencia (EC-07).
 - [ ] **T2.5.4** — Implementar lógica de idempotencia en `url.service.ts` y ajustar códigos 200/201 en `url.controller.ts`.
 - [ ] **T2.5.5** — Escribir test de integración para Rate Limiting (EC-06).

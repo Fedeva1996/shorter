@@ -4,7 +4,7 @@ import { urlSchema } from './urlValidator.js';
 describe('urlValidator (Pure Core)', () => {
   it('debe validar y pasar exitosamente una URL correcta con protocolo http o https', () => {
     const validUrlHttps = 'https://example.com/very/long/path';
-    const validUrlHttp = 'http://localhost:3000/test';
+    const validUrlHttp = 'http://some-other-domain.com/test';
     
     expect(() => urlSchema.parse(validUrlHttps)).not.toThrow();
     expect(() => urlSchema.parse(validUrlHttp)).not.toThrow();
