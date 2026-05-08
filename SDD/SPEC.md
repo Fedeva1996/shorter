@@ -59,11 +59,14 @@ interface UrlEntry {
 * [ ] **EC-03:** ¿Qué pasa si el código aleatorio generado para la URL tiene una colisión en la base de datos (Unique Constraint)? → El servicio debe capturar el error y reintentar generar un nuevo código hasta un máximo de 3 veces antes de fallar con HTTP 500.
 * [ ] **EC-04:** ¿Qué pasa si se solicita redirigir a un código que no existe en la base de datos? → Retornar HTTP 404.
 * [ ] **EC-05:** Condición de carrera en redirecciones concurrentes: si 10 usuarios hacen click a la vez en el mismo `shortCode`, el contador `clicks` debe sumar 10 exactamente, no perder escrituras. (Se debe usar un UPDATE atómico en la DB).
+* [ ] **EC-06:** ¿Qué pasa si una IP intenta crear demasiadas URLs en poco tiempo? → Retornar HTTP 429 (Too Many Requests).
+* [ ] **EC-07:** ¿Qué pasa si se envía a acortar una URL que ya existe en la base de datos? → El sistema debe comportarse de forma idempotente y retornar la entrada existente(200 OK) en lugar de crear una nueva (201 Created).
 
 ## 5. Reglas de Negocio
 
 * [ ] **RN-01:** El código corto debe tener siempre exactamente 6 caracteres usando el alfabeto Base62 (`a-z, A-Z, 0-9`).
 * [ ] **RN-02:** La redirección debe utilizar HTTP 302 (Found) para asegurar que los navegadores pasen por nuestro servidor en cada click y podamos contar las analíticas de forma precisa (un HTTP 301 podría ser cacheado por el navegador agresivamente).
+* [ ] **RN-03:** El sistema debe rechazar la acortación de URLs que pertenezcan al dominio de la propia aplicación para evitar bucles de redirección.
 
 ## 6. Criterios de Éxito (Definition of Done)
 

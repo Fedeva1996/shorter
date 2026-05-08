@@ -9,6 +9,7 @@
 |---|---|---|
 | Runtime / Lenguaje | Node.js 20+ / TypeScript 5.x | |
 | Framework | Express.js | Middleware de JSON, CORS |
+| Seguridad | express-rate-limit, helmet | Middlewares de protección (Tasa y Cabeceras) |
 | ORM | Prisma | Client generado fuertemente tipado |
 | Base de Datos | PostgreSQL 15+ | |
 | Validación | Zod | Para validar la `originalUrl` |
@@ -69,6 +70,8 @@ src/
 |---|---|---|
 | Backend | `controllers/url.controller.ts` | Mapeo de Request/Response HTTP, manejo de códigos de estado. |
 | Backend | `services/url.service.ts` | Instanciación del PrismaClient. Ejecución de Queries, reintentos de colisión de shortCodes, incrementos atómicos (`update`). |
+| Backend | `services/url.service.ts` | Instanciación del PrismaClient. Ejecución de Queries, reintentos de colisión, incrementos atómicos (`update`), idempotencia. |
+| Backend | `middlewares/rateLimiter.ts` | Implementación de express-rate-limit. |
 | Frontend| `api/urlApi.ts` | Llamadas Fetch hacia la API del Backend. |
 
 ## 4. Estrategia de Testing (TDD)
@@ -83,4 +86,6 @@ src/
 |---|---|---|
 | **Colisiones de ShortCode** | Baja al inicio, sube con el uso | En el `UrlService`, capturar el error `P2002` (Unique constraint failed) de Prisma y aplicar un bucle de reintento de creación hasta 3 veces con un nuevo código generado. |
 | **Race conditions (Contador Clics)** | Alta | Usar operaciones de incremento atómico de base de datos en lugar de leer y luego sumar. En Prisma: `update({ data: { clicks: { increment: 1 } } })`. |
+| **Abuso de API (Spam)** | Media | Usar `express-rate-limit` por IP. Proveer Idempotencia (retornar código existente) para ahorrar base de datos. |
+| **Redirection Loops** | Media | Validar en Zod `urlValidator.ts` que el host de la URL no coincida con el dominio de la propia aplicación. |
 | **Alucinaciones IA** | Alta | Usar un `PROMPT_BUILDER` estricto y respetar a rajatabla que el código mínimo necesario es el único permitido (YAGNI). |

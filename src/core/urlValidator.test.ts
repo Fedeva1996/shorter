@@ -24,4 +24,20 @@ describe('urlValidator (Pure Core)', () => {
     const veryLongUrl = 'https://example.com/' + 'a'.repeat(2048);
     expect(() => urlSchema.parse(veryLongUrl)).toThrow();
   });
+
+  it('debe fallar si la originalUrl pertenece al propio dominio de la aplicación para evitar bucles (RN-03)', () => {
+    // Simulamos el dominio base de la aplicación (por defecto localhost:3000 o localhost:5173 en dev)
+    const loopUrl1 = 'http://localhost:3000/aB3x9Z';
+    const loopUrl2 = 'http://localhost:5173/aB3x9Z';
+    
+    // Esto asegura que la config cargue una variable APP_DOMAIN o similar si es requerida en la impl.
+    process.env.APP_DOMAIN = 'localhost:3000,localhost:5173';
+    
+    expect(() => urlSchema.parse(loopUrl1)).toThrow(/bucle/i);
+    expect(() => urlSchema.parse(loopUrl2)).toThrow(/bucle/i);
+    
+    // Un dominio que contiene localhost pero no es exactamente debe pasar
+    const safeUrl = 'http://notlocalhost:3000/test';
+    expect(() => urlSchema.parse(safeUrl)).not.toThrow();
+  });
 });
