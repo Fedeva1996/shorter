@@ -1,27 +1,100 @@
 @import "tailwindcss";
 
-@tailwind utilities;
+/* ─── Design Tokens — Paleta naranja/amber warm ─────────────────────────── */
+@theme {
+  /* Tipografía */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-@layer utilities {
-  .clip-path-custom {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  }
+  /* Brand — naranja pastel a naranja vibrante */
+  --color-brand-50:  #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+
+  /* Superficies oscuras — warm neutral (stone) */
+  --color-surface-950: #0c0a09;
+  --color-surface-900: #1c1917;
+  --color-surface-800: #292524;
+  --color-surface-700: #44403c;
+  --color-surface-600: #57534e;
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #09090b;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #09090b;
-    --foreground: #fafafa;
-  }
-}
-
+/* ─── Base ───────────────────────────────────────────────────────────────── */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: #0c0a09; /* surface-950 */
+  color: #fafaf9;            /* stone-50 */
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Utilidades personalizadas ──────────────────────────────────────────── */
+@layer utilities {
+  /* Glassmorphism card */
+  .glass-card {
+    background: rgba(28, 25, 23, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(251, 146, 60, 0.15); /* brand-400/15 */
+  }
+
+  /* Glow naranja sutil */
+  .glow-brand {
+    box-shadow: 0 0 40px -8px rgba(249, 115, 22, 0.35);
+  }
+
+  /* Gradiente de texto naranja */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #fdba74, #f97316, #ea580c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Botón primario con gradiente */
+  .btn-primary {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    transition: opacity 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+  }
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Input dark estilizado */
+  .input-dark {
+    background: rgba(12, 10, 9, 0.8);
+    border: 1px solid rgba(251, 146, 60, 0.2);
+    color: #fafaf9;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input-dark:focus {
+    outline: none;
+    border-color: rgba(249, 115, 22, 0.6);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+  }
+  .input-dark::placeholder {
+    color: #78716c; /* stone-500 */
+  }
+
+  /* Animación fade-in para el resultado */
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 }
