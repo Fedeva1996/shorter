@@ -1,0 +1,44 @@
+name: Deploy to Oracle VM
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Mover a la carpeta del proyecto
+            mkdir -p ~/shorter
+            cd ~/shorter
+
+            # Si el repo no existe, lo inicializamos, si no, traemos los cambios
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://github.com/${{ github.repository }}.git
+            fi
+
+            # Traemos la última versión de la rama actual y reiniciamos
+            git fetch --all
+            git reset --hard origin/${{ github.ref_name }}
+
+            # Compilamos el frontend para que tome las variables de producción (si tienes frontend/.env prod, Docker lo usará)
+            # Y levantamos los contenedores en modo detached
+            docker compose down
+            docker compose up --build -d
+
+            # Limpiar imágenes viejas que no se usan (opcional para liberar espacio en Oracle Cloud)
+            docker image prune -f

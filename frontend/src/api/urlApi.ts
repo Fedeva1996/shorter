@@ -13,13 +13,9 @@ export const createShortUrl = async (originalUrl: string): Promise<CreateUrlResp
 
   if (!response.ok) {
     let errorMessage = 'Error al crear la URL acortada';
-    try {
-      const errorData = await response.json();
-      if (errorData && errorData.error) {
-        errorMessage = errorData.error;
-      }
-    } catch (e) {
-      // Ignoramos el error de parsing; usará el errorMessage genérico
+    const errorData = await response.json();
+    if (errorData?.error) {
+      errorMessage = errorData.error;
     }
     throw new Error(errorMessage);
   }
