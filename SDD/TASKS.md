@@ -42,8 +42,8 @@
   - ShortCode inexistente → retorna 404 (EC-04).
 - [x] **T2.4** — Implementar el endpoint de redirección, asegurando usar la API atómica de Prisma (`increment: 1`).
 - [x] **T2.5** — Escribir test de integración para `GET /api/v1/urls/{shortCode}/stats`. Verificar respuestas 200 (con estadísticas correctas) y 404.
-- [ ] **T2.6** — Implementar endpoint de stats en el controlador y servicio.
-- [ ] **T2.7** — Configurar un Middleware de Express para capturar excepciones globales (ej. Errores de Zod 400 y Errores 500) devolviendo JSON limpio, y armar el pipeline completo de rutas en `app.ts`.
+- [x] **T2.6** — Implementar endpoint de stats en el controlador y servicio.
+- [x] **T2.7** — Configurar un Middleware de Express para capturar excepciones globales (ej. Errores de Zod 400 y Errores 500) devolviendo JSON limpio, y armar el pipeline completo de rutas en `app.ts`.
 
 ---
 

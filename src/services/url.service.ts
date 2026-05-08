@@ -44,4 +44,18 @@ export class UrlService {
       throw error;
     }
   }
+
+  static async getStats(shortCode: string) {
+    const urlEntry = await prisma.urlEntry.findUnique({
+      where: { shortCode },
+      select: {
+        shortCode: true,
+        originalUrl: true,
+        clicks: true,
+        createdAt: true,
+        lastClickedAt: true
+      }
+    });
+    return urlEntry;
+  }
 }

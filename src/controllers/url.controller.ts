@@ -4,32 +4,33 @@ import { urlSchema } from '../core/urlValidator.js';
 
 export class UrlController {
   static async createUrl(req: Request, res: Response) {
-    try {
-      const { originalUrl } = req.body;
-      const validatedUrl = urlSchema.parse(originalUrl);
-      
-      const urlEntry = await UrlService.createUrl(validatedUrl);
-      return res.status(201).json(urlEntry);
-    } catch (error: any) {
-      if (error.name === 'ZodError') {
-         return res.status(400).json({ error: 'URL inválida o muy larga', details: error.errors });
-      }
-      return res.status(500).json({ error: error.message });
-    }
+    const { originalUrl } = req.body;
+    const validatedUrl = urlSchema.parse(originalUrl);
+    
+    const urlEntry = await UrlService.createUrl(validatedUrl);
+    return res.status(201).json(urlEntry);
   }
 
   static async redirect(req: Request, res: Response) {
-    try {
-      const { shortCode } = req.params;
-      const urlEntry = await UrlService.resolveAndIncrement(shortCode);
-      
-      if (!urlEntry) {
-        return res.status(404).json({ error: 'Enlace no encontrado' });
-      }
-      
-      return res.redirect(302, urlEntry.originalUrl);
-    } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+    const { shortCode } = req.params;
+    const urlEntry = await UrlService.resolveAndIncrement(shortCode);
+    
+    if (!urlEntry) {
+      return res.status(404).json({ error: 'Enlace no encontrado' });
     }
+    
+    return res.redirect(302, urlEntry.originalUrl);
+  }
+
+  static async getStats(req: Request, res: Response) {
+    const { shortCode } = req.params;
+    const stats = await UrlService.getStats(shortCode);
+
+    if (!stats) {
+      return res.status(404).json({ error: 'Enlace no encontrado' });
+    }
+
+    return res.status(200).json(stats);
   }
 }
+
