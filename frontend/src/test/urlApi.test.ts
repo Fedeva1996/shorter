@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { createShortUrl } from '../api/urlApi'; // No existe aún — RED
+import { createShortUrl } from '../api/urlApi';
 
 // Mock the global fetch API
 global.fetch = vi.fn();

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ShortenerForm } from '../components/ShortenerForm'; // No existe aún — RED
+import { ShortenerForm } from '../components/ShortenerForm';
 
 describe('ShortenerForm', () => {
   const mockOnSubmit = vi.fn();

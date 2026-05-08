@@ -3,7 +3,7 @@ import request from 'supertest';
 import express from 'express';
 import urlRoutes from '../../routes/url.routes.js';
 import { errorHandler } from '../../middlewares/errorHandler.js';
-import { createRateLimiter } from '../../middlewares/rateLimiter.js'; // No existe aún — RED
+import { createRateLimiter } from '../../middlewares/rateLimiter.js';
 import { prisma } from '../../core/db.js';
 
 describe('[EC-06] Rate Limiting — POST /api/v1/urls', () => {
