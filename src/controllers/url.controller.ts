@@ -6,9 +6,10 @@ export class UrlController {
   static async createUrl(req: Request, res: Response) {
     const { originalUrl } = req.body;
     const validatedUrl = urlSchema.parse(originalUrl);
-    
-    const urlEntry = await UrlService.createUrl(validatedUrl);
-    return res.status(201).json(urlEntry);
+
+    const { entry, created } = await UrlService.createUrl(validatedUrl);
+    const statusCode = created ? 201 : 200;
+    return res.status(statusCode).json(entry);
   }
 
   static async redirect(req: Request, res: Response) {

@@ -89,3 +89,4 @@ src/
 | **Abuso de API (Spam)** | Media | Usar `express-rate-limit` por IP. Proveer Idempotencia (retornar código existente) para ahorrar base de datos. |
 | **Redirection Loops** | Media | Validar en Zod `urlValidator.ts` que el host de la URL no coincida con el dominio de la propia aplicación. |
 | **Alucinaciones IA** | Alta | Usar un `PROMPT_BUILDER` estricto y respetar a rajatabla que el código mínimo necesario es el único permitido (YAGNI). |
+| **Decisión técnica adicional a revisar:** | Baja | En el bucle de reintentos de colisión (P2002), actualmente se reintenta asumiendo que la colisión fue en shortCode. Con @unique en originalUrl, un P2002 podría ser también de originalUrl. Sin embargo, este caso ya no puede ocurrir en producción normal porque el findUnique previo lo intercepta antes del create. Solo podría ocurrir en una carrera extrema, que el findUnique inicial elimina en la práctica. |

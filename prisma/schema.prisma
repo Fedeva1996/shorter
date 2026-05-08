@@ -9,7 +9,7 @@ datasource db {
 
 model UrlEntry {
   id            String    @id @default(uuid())
-  originalUrl   String    @db.VarChar(2048)
+  originalUrl   String    @unique @db.VarChar(2048)
   shortCode     String    @unique @db.VarChar(6)
   clicks        Int       @default(0)
   createdAt     DateTime  @default(now())
