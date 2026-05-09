@@ -39,6 +39,23 @@ Esto levantará:
 - Backend API en `http://localhost:3000`
 - Frontend UI en `http://localhost:80`
 
+## 📡 Uso de la API
+
+La aplicación expone las siguientes rutas públicas:
+
+### Redirección de URL
+Cuando tienes un código corto (ej. `Rat59q`), la redirección se hace directamente en la raíz:
+```
+GET /Rat59q
+```
+
+### Estadísticas de una URL
+Para consultar la cantidad de clics y los datos originales de un enlace, utiliza la ruta de la API:
+```
+GET /api/v1/urls/:shortCode/stats
+```
+Ejemplo de respuesta en producción: `https://shorty-fedeva.duckdns.org/api/v1/urls/Rat59q/stats`
+
 ## 🧪 Pruebas (TDD)
 El proyecto cuenta con cobertura de pruebas unitarias y de integración completas.
 - Test de backend: `npx vitest run test`
