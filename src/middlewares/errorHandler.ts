@@ -10,7 +10,7 @@ export const errorHandler = (
   if (err instanceof ZodError) {
     return res.status(400).json({
       error: 'URL inválida o muy larga',
-      details: err.errors,
+      details: err.issues,
     });
   }
 
