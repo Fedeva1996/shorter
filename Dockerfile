@@ -10,6 +10,7 @@ RUN npm ci
 
 # Copy source code and build
 COPY tsconfig.json ./
+COPY prisma.config.ts ./
 COPY src ./src/
 RUN npx prisma generate
 RUN npm run build
@@ -24,6 +25,7 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma.config.ts ./
 
 # Set environment
 ENV NODE_ENV=production
