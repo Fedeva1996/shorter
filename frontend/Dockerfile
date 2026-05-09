@@ -7,7 +7,7 @@ RUN npm ci
 
 COPY . .
 # Set the backend URL for production
-ENV VITE_API_URL=http://localhost:3000
+ENV VITE_API_URL=https://shorty-fedeva.duckdns.org
 RUN npm run build
 
 # Serve stage with Nginx
