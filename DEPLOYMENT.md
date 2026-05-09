@@ -41,7 +41,7 @@ sudo nano /etc/nginx/sites-available/shorter
 2. Pega este contenido (reemplaza `fedeva.duckdns.org` por tu dominio real):
 ```nginx
 server {
-    server_name shorty.fedeva.duckdns.org;
+    server_name shorty-fedeva.duckdns.org;
 
     # Enviar tráfico de la API al Backend
     location /api/ {
@@ -73,7 +73,7 @@ server {
 ```bash
 sudo ln -s /etc/nginx/sites-available/shorter /etc/nginx/sites-enabled/
 sudo nginx -t
-sudo certbot --nginx -d fedeva.duckdns.org
+sudo certbot --nginx -d shorty-fedeva.duckdns.org
 sudo systemctl restart nginx
 ```
 
@@ -94,7 +94,7 @@ Pega tu configuración en el `.env` del servidor:
 # URL de la Base de Datos interna (PostgreSQL)
 DATABASE_URL="postgresql://admin:admin_password@db:5432/shorter?schema=public"
 PORT=3000
-APP_DOMAIN="shorty.fedeva.duckdns.org"
+APP_DOMAIN="shorty-fedeva.duckdns.org"
 ```
 
 ## 4. Configurar secretos en GitHub (Para la CI/CD)
