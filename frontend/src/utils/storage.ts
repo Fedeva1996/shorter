@@ -1,4 +1,4 @@
-import { UrlEntry } from '../types/url.types';
+import type { UrlEntry } from '../types/url.types';
 
 const HISTORY_KEY = 'shorter_history';
 
