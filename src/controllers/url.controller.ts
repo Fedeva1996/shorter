@@ -62,5 +62,23 @@ export class UrlController {
 
     return res.status(200).json(stats);
   }
+
+  static async getUserLinks(req: AuthRequest, res: Response) {
+    const userId = req.user!.userId;
+    const links = await UrlService.getUserLinks(userId);
+    return res.status(200).json(links);
+  }
+
+  static async syncLinks(req: AuthRequest, res: Response) {
+    const userId = req.user!.userId;
+    const { shortCodes } = req.body;
+
+    if (!shortCodes || !Array.isArray(shortCodes)) {
+      return res.status(400).json({ error: 'Falta la lista de shortCodes a sincronizar' });
+    }
+
+    await UrlService.syncLinks(userId, shortCodes);
+    return res.status(200).json({ message: 'Enlaces sincronizados exitosamente' });
+  }
 }
 

@@ -73,4 +73,21 @@ export class UrlService {
     });
     return urlEntry;
   }
+
+  static async getUserLinks(userId: string) {
+    return prisma.urlEntry.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' }
+    });
+  }
+
+  static async syncLinks(userId: string, shortCodes: string[]) {
+    return prisma.urlEntry.updateMany({
+      where: {
+        shortCode: { in: shortCodes },
+        userId: null // Solo permitimos reclamar links anónimos
+      },
+      data: { userId }
+    });
+  }
 }
