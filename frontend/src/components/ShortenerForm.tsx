@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 
 interface ShortenerFormProps {
   onSubmit: (url: string) => void;
@@ -14,7 +15,7 @@ export const ShortenerForm = ({ onSubmit, isLoading }: ShortenerFormProps) => {
 
   const isDisabled = isLoading || !value.trim() || !isValidUrl(value.trim());
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (isDisabled) return;
     onSubmit(value.trim());
