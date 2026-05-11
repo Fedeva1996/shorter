@@ -58,4 +58,33 @@ describe('App Orchestration', () => {
       expect(screen.getByText(expectedUrl)).toBeInTheDocument();
     });
   });
+
+  it('guarda el enlace en el historial al ser creado exitosamente', async () => {
+    const user = userEvent.setup();
+    const mockResponse = {
+      id: 'history-1',
+      originalUrl: 'https://history.com',
+      shortCode: 'hist01',
+      clicks: 0,
+      createdAt: new Date().toISOString(),
+      lastClickedAt: null,
+    };
+
+    (urlApi.createShortUrl as any).mockResolvedValueOnce(mockResponse);
+
+    render(<App />);
+
+    const input = screen.getByRole('textbox', { name: /url/i });
+    await user.type(input, 'https://history.com');
+
+    const button = screen.getByRole('button', { name: /acortar/i });
+    await user.click(button);
+
+    // Debe aparecer en el historial (HistoryList)
+    await waitFor(() => {
+      expect(screen.getByText('Historial reciente')).toBeInTheDocument();
+      expect(screen.getByText('hist01')).toBeInTheDocument();
+      expect(screen.getByText('https://history.com')).toBeInTheDocument();
+    });
+  });
 });

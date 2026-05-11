@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { ShortenerForm } from './components/ShortenerForm';
 import { ResultDisplay } from './components/ResultDisplay';
+import { HistoryList } from './components/HistoryList';
 import { createShortUrl } from './api/urlApi';
+import { useHistory } from './hooks/useHistory';
 import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [shortCode, setShortCode] = useState<string | null>(null);
+  const { history, addToHistory, clearHistory } = useHistory();
 
   const handleShorten = async (url: string) => {
     setIsLoading(true);
@@ -17,6 +20,7 @@ function App() {
     try {
       const response = await createShortUrl(url);
       setShortCode(response.shortCode);
+      addToHistory(response);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -53,6 +57,9 @@ function App() {
         {shortCode && !error && (
           <ResultDisplay shortCode={shortCode} />
         )}
+
+        {/* Historial (fuera del card principal) */}
+        <HistoryList history={history} onClear={clearHistory} />
       </div>
     </main>
   );
