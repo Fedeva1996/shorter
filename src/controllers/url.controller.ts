@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { UrlService } from '../services/url.service.js';
 import { urlSchema } from '../core/urlValidator.js';
+import { AuthRequest } from '../middlewares/requireAuth.js';
 
 export class UrlController {
-  static async createUrl(req: Request, res: Response) {
+  static async createUrl(req: AuthRequest, res: Response) {
     const { originalUrl } = req.body;
+    const userId = req.user?.userId;
     let validatedUrl: string;
     try {
       validatedUrl = urlSchema.parse(originalUrl);
@@ -21,7 +23,7 @@ export class UrlController {
       return res.status(400).json({ error: "No se permite acortar URLs del propio dominio (Bucle detectado)" });
     }
 
-    const { entry, created } = await UrlService.createUrl(validatedUrl);
+    const { entry, created } = await UrlService.createUrl(validatedUrl, userId);
     const statusCode = created ? 201 : 200;
     
     return res.status(statusCode).json({
@@ -59,6 +61,24 @@ export class UrlController {
     }
 
     return res.status(200).json(stats);
+  }
+
+  static async getUserLinks(req: AuthRequest, res: Response) {
+    const userId = req.user!.userId;
+    const links = await UrlService.getUserLinks(userId);
+    return res.status(200).json(links);
+  }
+
+  static async syncLinks(req: AuthRequest, res: Response) {
+    const userId = req.user!.userId;
+    const { shortCodes } = req.body;
+
+    if (!shortCodes || !Array.isArray(shortCodes)) {
+      return res.status(400).json({ error: 'Falta la lista de shortCodes a sincronizar' });
+    }
+
+    await UrlService.syncLinks(userId, shortCodes);
+    return res.status(200).json({ message: 'Enlaces sincronizados exitosamente' });
   }
 }
 

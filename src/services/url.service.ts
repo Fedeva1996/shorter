@@ -2,7 +2,7 @@ import { prisma } from '../core/db.js';
 import { generateShortCode } from '../core/codeGenerator.js';
 
 export class UrlService {
-  static async createUrl(originalUrl: string): Promise<{ entry: Awaited<ReturnType<typeof prisma.urlEntry.findUniqueOrThrow>>; created: boolean }> {
+  static async createUrl(originalUrl: string, userId?: string): Promise<{ entry: Awaited<ReturnType<typeof prisma.urlEntry.findUniqueOrThrow>>; created: boolean }> {
     // EC-07: Idempotencia — si la URL ya existe, retornar la entrada existente
     const existing = await prisma.urlEntry.findUnique({
       where: { originalUrl },
@@ -18,7 +18,7 @@ export class UrlService {
       const shortCode = generateShortCode();
       try {
         const urlEntry = await prisma.urlEntry.create({
-          data: { originalUrl, shortCode },
+          data: { originalUrl, shortCode, userId },
         });
         return { entry: urlEntry, created: true };
       } catch (error: any) {
@@ -72,5 +72,22 @@ export class UrlService {
       }
     });
     return urlEntry;
+  }
+
+  static async getUserLinks(userId: string) {
+    return prisma.urlEntry.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' }
+    });
+  }
+
+  static async syncLinks(userId: string, shortCodes: string[]) {
+    return prisma.urlEntry.updateMany({
+      where: {
+        shortCode: { in: shortCodes },
+        userId: null // Solo permitimos reclamar links anónimos
+      },
+      data: { userId }
+    });
   }
 }
