@@ -5,15 +5,15 @@ services:
     image: postgres:15-alpine
     container_name: shorter_db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin_password
-      POSTGRES_DB: shorter
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin_password}
+      POSTGRES_DB: ${DB_NAME:-shorter}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d shorter"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-shorter}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -27,7 +27,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://admin:admin_password@db:5432/shorter?schema=public
+      - DATABASE_URL=postgresql://${DB_USER:-admin}:${DB_PASSWORD:-admin_password}@db:5432/${DB_NAME:-shorter}?schema=public
     depends_on:
       db:
         condition: service_healthy

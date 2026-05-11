@@ -92,7 +92,7 @@ nano .env
 Pega tu configuración en el `.env` del servidor:
 ```env
 # URL de la Base de Datos interna (PostgreSQL)
-DATABASE_URL="postgresql://admin:admin_password@db:5432/shorter?schema=public"
+DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?schema=public"
 PORT=3000
 APP_DOMAIN="shorty-fedeva.duckdns.org"
 ```
