@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { HistoryList } from '../components/HistoryList';
-import { UrlEntry } from '../types/url.types';
+import type { UrlEntry } from '../types/url.types';
 
 const mockHistory: UrlEntry[] = [
   {

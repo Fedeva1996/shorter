@@ -13,16 +13,16 @@ export const Navbar = () => {
       <div className="flex items-center gap-6">
         {isAuthenticated ? (
           <>
+            <div className="hidden sm:flex flex-col items-end">
+              <span className="text-xs text-stone-500">Conectado como</span>
+              <span className="text-sm font-medium text-stone-300">{user?.email}</span>
+            </div>
             <Link 
               to="/dashboard" 
               className="text-sm font-semibold text-stone-400 hover:text-brand-400 transition-colors"
             >
               Mis Enlaces
             </Link>
-            <div className="hidden sm:flex flex-col items-end">
-              <span className="text-xs text-stone-500">Conectado como</span>
-              <span className="text-sm font-medium text-stone-300">{user?.email}</span>
-            </div>
             <button
               onClick={logout}
               className="text-sm font-semibold text-stone-400 hover:text-red-400 transition-colors"

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { UrlEntry } from '../types/url.types';
+import type { UrlEntry } from '../types/url.types';
 import { getHistory, saveToHistory, clearHistory as clearStorage } from '../utils/storage';
 import { getMyLinks } from '../api/urlApi';
 

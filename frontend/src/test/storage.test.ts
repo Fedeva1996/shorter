@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { saveToHistory, getHistory, clearHistory } from '../utils/storage';
-import { UrlEntry } from '../types/url.types';
+import type { UrlEntry } from '../types/url.types';
 
 const mockEntry: UrlEntry = {
   id: '1',
