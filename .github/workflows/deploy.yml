@@ -38,7 +38,9 @@ jobs:
       - name: Run Backend Migrations
         env:
           DATABASE_URL: postgresql://admin:admin_password@localhost:5433/shorter_test?schema=public
-        run: npx prisma migrate deploy
+        run: |
+          npx prisma migrate deploy
+          npx prisma generate
 
       - name: Run Backend Tests
         env:
